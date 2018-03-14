@@ -1,6 +1,9 @@
-# The file can't be used directly.
+# The file can be used directly.
 # You can write your file based on this,
 # or you can simply change the image link to your own.
+# Caution:The startup order of the containers must be:
+# Zookeeper -> Kafka -> (Topic Creation) -> router -> logic -> comet -> job
+# Wrong startup order may cause errors.
 services:
     goim_zookeeper:
         image: zookeeper
@@ -11,6 +14,14 @@ services:
         environment:
             ZOO_MY_ID: 1
         volumes:
-            - zoo_config: /conf
+            - goim_zoo_config: /conf
     goim_kafka:
+        image: zhouweitong/goim-docker:goim_kafka
+        restart: always
+        hostname: goimkafka
+        ports:
+            - 9092: 9092
+            - 9094: 9094
+        volumes:
+            - goim_kafka: /root
     

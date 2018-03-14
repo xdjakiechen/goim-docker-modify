@@ -10,6 +10,13 @@ RUN apk update && \
 	apk del wget tar && \
 	\cp -rf kafka_$kafka_ver-$kafka_rel kafka && \
 	rm -rf kafka_$kafka_ver-$kafka_rel
-VOLUME ["/root/kafka"]
+ADD create_topic.sh /root
+ADD start.sh /root
+RUN chmod 777 /root/start.sh && \
+	chmod 777 /root/create_topic.sh
+VOLUME ["/root"]
 EXPOSE 9092
 EXPOSE 9094
+# Please create the KafkaPushTopic manually.
+# For the command,see create_topic.sh
+CMD /bin/bash -c /root/start.sh

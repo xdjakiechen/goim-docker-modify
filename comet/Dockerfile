@@ -1,5 +1,5 @@
 FROM golang:alpine
-RUN apk update && apk add git bash && cd /root && mkdir go && cd go && mkdir src && cd src && \
+RUN apk update && apk add git bash && cd /go && mkdir src && cd src && \
 	git clone https://github.com/Terry-mao/goim.git && mkdir golang.org && cd golang.org && mkdir x && cd x && \
 	git clone https://github.com/golang/net.git && go get -u github.com/Terry-Mao/goconf && \
 	go get -u github.com/thinkboy/log4go && go get -u github.com/gorilla/websocket && \

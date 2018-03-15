@@ -12,12 +12,14 @@ RUN apk update && \
     git clone https://github.com/wvanbergen/kafka.git && \
     cd /go/src/goim/logic/job && \
     go build && \
-    \cp -rf comet /root && \
-    \cp -rf comet-example.conf /root/comet.conf && \
-    \cp -rf comet-log.xml /root/comet-log.xml && \
+    \cp -rf job /root && \
+    \cp -rf job-example.conf /root/job.conf && \
+    \cp -rf job-log.xml /root/job-log.xml && \
     rm -rf /go/src && \
     mkdir /go/src && \
     apk del git
+ADD start.sh /root
+RUN chmod 777 /root/start.sh
 VOLUME ["/root"]
 EXPOSE 6971
 EXPOSE 6972
@@ -25,4 +27,4 @@ EXPOSE 8080
 EXPOSE 8090
 EXPOSE 8092
 EXPOSE 7371
-CMD /bin/bash -c "cd /root;nohup ./comet -c comet.conf 2>&1 >> /root/comet.log & ;while true;do sleep 60;done;"
+CMD /bin/bash -c /root/start.sh

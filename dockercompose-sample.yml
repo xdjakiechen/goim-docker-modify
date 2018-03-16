@@ -42,4 +42,9 @@ services:
         restart: always
         hostname: comet
         ports:
-            - 6971: 6971
+            - 6971: 6971 # comet service profiling
+            - 6972: 6972 # statistics bind port
+            - 8080: 8080 #
+            - 8090: 8090
+            - 8092: 8092
+            - 7371: 7371

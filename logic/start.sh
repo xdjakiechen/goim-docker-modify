@@ -1,7 +1,7 @@
 #!/bin/sh
-echo "Starting job";
-cd /root ;
-nohup ./job -c job.conf 2>&1 >> /root/logs/job.log & ;
+echo "Starting logic"
+cd /root;
+nohup ./logic -c logic.conf 2>&1 >> /root/logic.log & ;
 while true;
-do sleep 1;
+do sleep 60;
 done;

@@ -1,27 +1,37 @@
-# The file can be used directly.
+# The file can't be used directly.
 # You can write your file based on this,
-# or you can simply change the image link to your own.
+# and change the config file manually.
 # Caution:The startup order of the containers must be:
 # Zookeeper -> Kafka -> (Topic Creation) -> router -> logic -> comet -> job
 # Wrong startup order may cause errors.
 services:
-    goim_zookeeper:
+    goim_zookeeper: # Apache Zookeeper
         image: zookeeper
         restart: always
         hostname: goimzoo
         ports:
-            - 2181: 2181
+            - 2181: 2181 # The main port
         environment:
-            ZOO_MY_ID: 1
+            ZOO_MY_ID: 1 # The instance number of zookeeper
         volumes:
-            - goim_zoo_config: /conf
-    goim_kafka:
+            - goim_zoo_config: /conf # Zookeeper config file
+    goim_kafka: # Apache Kafka
         image: zhouweitong/goim-docker:goim_kafka
         restart: always
         hostname: goimkafka
         ports:
-            - 9092: 9092
+            - 9092: 9092 # Kafka main port
             - 9094: 9094
         volumes:
-            - goim_kafka: /root
-    
+            - goim_kafka: /root # Kafka programfiles
+    goim-router
+
+    goim-logic:
+        image: zhouweitong/goim-docker:logic
+        restart: always
+        hostname: logic
+        ports:
+            - 7170: 7170
+            - 7171: 7171
+            - 7172: 7172
+            - 7372: 7372

@@ -21,10 +21,5 @@ RUN apk update && \
 ADD start.sh /root
 RUN chmod 777 /root/start.sh
 VOLUME ["/root"]
-EXPOSE 6971
-EXPOSE 6972
-EXPOSE 8080
-EXPOSE 8090
-EXPOSE 8092
-EXPOSE 7371
+EXPOSE 7373
 CMD /bin/bash -c /root/start.sh

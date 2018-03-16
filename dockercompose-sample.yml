@@ -5,7 +5,7 @@
 # Zookeeper -> Kafka -> (Topic Creation) -> router -> logic -> comet -> job
 # Wrong startup order may cause errors.
 services:
-    goim_zookeeper: # Apache Zookeeper
+    goim-zookeeper: # Apache Zookeeper
         image: zookeeper
         restart: always
         hostname: goimzoo
@@ -15,7 +15,7 @@ services:
             ZOO_MY_ID: 1 # The instance number of zookeeper
         volumes:
             - goim_zoo_config: /conf # Zookeeper config file
-    goim_kafka: # Apache Kafka
+    goim-kafka: # Apache Kafka
         image: zhouweitong/goim-docker:goim_kafka
         restart: always
         hostname: goimkafka
@@ -31,7 +31,15 @@ services:
         restart: always
         hostname: logic
         ports:
-            - 7170: 7170
-            - 7171: 7171
-            - 7172: 7172
-            - 7372: 7372
+            - 7170: 7170 # logic rpc server
+            - 7171: 7171 # logic service profiling
+            - 7172: 7172 # logic http bind port
+            - 7372: 7372 # logic monitor
+        volumes:
+            - goim_logic: /root # Logic programfiles
+    goim-comet:
+        image: zhouweitong/goim-docker:comet
+        restart: always
+        hostname: comet
+        ports:
+            - 6971: 6971

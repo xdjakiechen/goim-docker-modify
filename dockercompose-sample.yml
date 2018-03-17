@@ -6,45 +6,70 @@
 # Wrong startup order may cause errors.
 services:
     goim-zookeeper: # Apache Zookeeper
-        image: zookeeper
+        image: "zookeeper"
         restart: always
         hostname: goimzoo
         ports:
-            - 2181: 2181 # The main port
+            - "2181:2181" # zookeeper main port
         environment:
             ZOO_MY_ID: 1 # The instance number of zookeeper
         volumes:
-            - goim_zoo_config: /conf # Zookeeper config file
+            - goim_zoo_config:/conf # zookeeper config file
     goim-kafka: # Apache Kafka
-        image: zhouweitong/goim-docker:goim_kafka
+        image: "zhouweitong/goim-docker:goim_kafka"
         restart: always
         hostname: goimkafka
         ports:
-            - 9092: 9092 # Kafka main port
-            - 9094: 9094
+            - "9092:9092" # kafka main port
+            - "9094:9094"
         volumes:
-            - goim_kafka: /root # Kafka programfiles
-    goim-router
-
+            - goim_kafka:/root # kafka programfiles
+    goim-router:
+        image: "zhouweitong/goim-docker:router"
+        restart: always
+        hostname: router
+        ports:
+            - "7271:7271" # router service profiling
+            - "7270:7270" # router rpc
+            - "7374:7374" # router monitor
+        volumes:
+            - goim_router:/root # router programfiles
     goim-logic:
-        image: zhouweitong/goim-docker:logic
+        image: "zhouweitong/goim-docker:logic"
         restart: always
         hostname: logic
         ports:
-            - 7170: 7170 # logic rpc server
-            - 7171: 7171 # logic service profiling
-            - 7172: 7172 # logic http bind port
-            - 7372: 7372 # logic monitor
+            - "7170:7170" # logic rpc server
+            - "7171:7171" # logic service profiling
+            - "7172:7172" # logic http bind port
+            - "7372:7372" # logic monitor
         volumes:
-            - goim_logic: /root # Logic programfiles
+            - goim_logic:/root # logic programfiles
     goim-comet:
         image: zhouweitong/goim-docker:comet
         restart: always
         hostname: comet
         ports:
-            - 6971: 6971 # comet service profiling
-            - 6972: 6972 # statistics bind port
-            - 8080: 8080 #
-            - 8090: 8090
-            - 8092: 8092
-            - 7371: 7371
+            - "6971:6971" # comet service profiling
+            - "6972:6972" # statistics bind port
+            - "8080:8080" # tcp protol bind port
+            - "8090:8090" # websocket protol bind port
+            - "8092:8092" # comet rpc port
+            - "7371:7371" # comet monitor
+        volumes:
+            - goim_comet:/root # comet programfiles
+    goim-job:
+        image: "zhouweitong/goim-docker:job"
+        restart: always
+        hostname: job
+        ports:
+            - "7373:7373" # job monitor
+        volumes:
+            - goim_job:/root # job programfiles
+    goim-benchmark:
+        image: "zhouweitong/goim-docker:benchmark"
+        hostname: benchmark
+        ports:
+            - "1999:1999" # example http server
+        volumes:
+            - goim_benchmark:/root # benchmark programfiles

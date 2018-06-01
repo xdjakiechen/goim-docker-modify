@@ -10,6 +10,10 @@ RUN apk update && \
     go get -u github.com/wvanbergen/kazoo-go && \
     cd github.com/wvanbergen && \
     git clone https://github.com/wvanbergen/kafka.git && \
+	mkdir /go/src/golang.org && \
+    mkdir /go/src/golang.org/x && \
+    cd /go/src/golang.org/x && \
+    git clone https://github.com/golang/net.git && \
     cd /go/src/goim/comet/client && \
     go build && \
     mkdir /root/client && \

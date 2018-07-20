@@ -2,7 +2,7 @@ FROM golang:alpine
 RUN apk update && \
     apk add git bash && \
     cd /go/src && \
-    git clone -b master-cors https://github.com/zhouweitong3/goim.git && \
+    git clone -b master https://github.com/shinrariel/goim.git && \
     go get -u github.com/thinkboy/log4go && \
     go get -u github.com/Terry-Mao/goconf && \
     go get -u github.com/gorilla/websocket && \

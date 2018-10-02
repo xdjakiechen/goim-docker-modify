@@ -86,9 +86,9 @@ RUN yum update -y && \
     ln -s /root/config/client.conf /root/soft/client/client.conf && \
     \cp -rf log.xml /root/soft/client/log.xml && \
 # Cleaning up
-    yum autoremove -y git go wget && \
-    rm -rf /root/src && \
-    rm -rf /root/go && \
+#    yum autoremove -y git go wget && \
+#    rm -rf /root/src && \
+#    rm -rf /root/go && \
 # Permission setting up
     chmod -R 777 /root/shell && \
     ln -s /root/shell/start.sh /root/start.sh && \
